@@ -1,4 +1,4 @@
-# - pGit, the p^(arody^)Git -
+# - pGit, the p(arody)Git -
 This repo is for pure meme. Don't take this so serious.\
 There is no instructions on how to run or install it. Do it on your own.
 
