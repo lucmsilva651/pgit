@@ -6,5 +6,5 @@ There is no instructions on how to run or install it. Do it on your own.
 Use `pgit --help` to see the commands available.
 
 ## License
-[BSD-3-Clause](LICENSE.md) - 2024 Lucas Gabriel (lucmsilva).\
+[BSD-3-Clause](LICENSE) - 2024 Lucas Gabriel (lucmsilva).\
 Idea taken from [@ihatenodejs](https://github.com/ihatenodejs).
