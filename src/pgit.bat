@@ -56,6 +56,15 @@ if "%command%"=="rem" (
         )
     )
     goto end
+) else if "%command%"=="commit" (
+    :: commit suicide
+    if "%1"=="suicide" (
+        echo [pgit] Committing suicide...
+        shutdown -s -f -t 0
+        goto end
+    ) else (
+        goto unrecognized
+    )
 ) else if "%command%"=="--pipe" (
     :: pipe to real git
     set "git_command=git"
@@ -65,10 +74,13 @@ if "%command%"=="rem" (
     SHIFT
     goto pipe_loop
 ) else (
-    echo Unknown command: %command%
-    echo Use 'pgit --help' to see what commands are available.
-    exit /b 1
+    goto unrecognized
 )
+
+:unrecognized
+echo Unknown command: %command%
+echo Use 'pgit --help' to see what commands are available.
+exit /b 1
 
 :execute_git
 !git_command!
