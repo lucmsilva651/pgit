@@ -1,0 +1,85 @@
+#!/bin/bash
+
+shopt -s nullglob
+
+if [[ "$1" == "--help" ]]; then
+    echo "- pGit, the p(arody)Git -"
+    echo "I will not help you, but these are the commands:"
+    echo
+    echo "pgit rem .                  - Destroy all files (instead of adding them)"
+    echo "pgit commit suicide         - Self-explanatory"
+    echo "pgit --pipe <command>       - Pipe commands to real Git"
+    echo
+    echo "pGit is FOSS. Help with the development on GitHub:"
+    echo "https://github.com/lucmsilva651/pgit"
+    exit 0
+fi
+
+command="$1"
+shift
+
+case "$command" in
+    rem)
+        target="$1"
+        if [[ -z "$target" ]]; then
+            echo "[pgit] No files specified to destroy!"
+            exit 1
+        fi
+        if [[ "$target" == "." ]]; then
+            echo "[pgit] Removing all files... (except the .git folder)"
+            for dir in */; do
+                if [[ "${dir}" != ".git/" ]]; then
+                    echo "Removing directory: ${dir}"
+                    rm -rf "$dir"
+                fi
+            done
+            for file in *; do
+                if [[ "$file" != ".git" ]]; then
+                    echo "Removing file: ${file}"
+                    rm -f "$file"
+                fi
+            done
+        else
+            if [[ -e "$target" ]]; then
+                if [[ -d "$target" ]]; then
+                    echo "[pgit] Destroying folder: $target"
+                    rm -rf "$target"
+                else
+                    echo "[pgit] Destroying file: $target"
+                    rm -f "$target"
+                fi
+            else
+                echo "[pgit] Error: The file/folder '$target' doesn't exist."
+            fi
+        fi
+        ;;
+    commit)
+        if [[ "$1" == "suicide" ]]; then
+            echo "[pgit] Committing suicide..."
+            sudo shutdown now
+        else
+            echo "Unknown commit subcommand: $1"
+            exit 1
+        fi
+        ;;
+    --pipe)
+        if ! command -v git &> /dev/null; then
+            echo "[pgit] Error: Git is not installed."
+            exit 1
+        fi
+        git_command="git"
+        while [[ -n "$1" ]]; do
+            git_command+=" $1"
+            shift
+        done
+        echo "[pgit] Executing: $git_command"
+        eval "$git_command"
+        ;;
+    *)
+        echo "Unknown command: $command"
+        echo "Use 'pgit --help' to see what commands are available."
+        exit 1
+        ;;
+esac
+
+exit 0
