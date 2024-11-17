@@ -4,6 +4,14 @@ There is no instructions on how to run or install it. Do it on your own.
 
 ## Commands
 Use `pgit --help` to see the commands available.
+On Linux, use `./pgit --help`
+
+## Linux
+To use `pgit` on Linux, you must first make it executable:
+```bash
+cd src
+chmod +x pgit
+```
 
 ## License
 [BSD-3-Clause](LICENSE) - 2024 Lucas Gabriel (lucmsilva).\
